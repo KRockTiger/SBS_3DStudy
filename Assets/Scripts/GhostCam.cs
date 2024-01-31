@@ -82,14 +82,14 @@ public class GhostCam : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Space))
         {
-            //transform.position +=
-            //   Vector3.up * mouseMoveSpeed * Time.deltaTime;
+            transform.position +=
+               Vector3.up * mouseMoveSpeed * Time.deltaTime;
         }
 
         else if (Input.GetKey(KeyCode.LeftControl))
         {
-            //transform.position +=
-            //   Vector3.down * mouseMoveSpeed * Time.deltaTime;
+            transform.position +=
+               Vector3.down * mouseMoveSpeed * Time.deltaTime;
         }
     }
 
