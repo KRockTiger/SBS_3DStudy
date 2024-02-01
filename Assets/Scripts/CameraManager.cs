@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public enum Cams //미리 정의되어야만 하는 데이터
@@ -20,6 +21,21 @@ public class CameraManager : MonoBehaviour
 
     [SerializeField] private List<Camera> listCam; //카메라를 넣을 리스트
     [SerializeField] private List<Button> listBtns; //버튼을 넣을 리스트
+
+    private UnityAction _action = null;
+    public UnityAction Action { set => _action = value; }
+
+    public void AddAction(UnityAction _addAction)
+    {
+        _action += _addAction;
+    }
+
+    public void RemoveAction(UnityAction _removeAction)
+    {
+        _action -= _removeAction;
+    }
+
+    [SerializeField] private bool forTest;
 
     private void Awake()
     {
@@ -56,6 +72,8 @@ public class CameraManager : MonoBehaviour
     {
         //람다식 for문을 만났을 때 조건이 되는 변수가 계속 변하는게 그 변하는
         //데이터의 주소를 계속 전달하기 때문에 문제를 야기
+        //람다식 -> 무명함수
+        //델리게이트 -> 대리자 혹은 나중에 실행될 예약기능(단순히 예약이라고도 함)
         int count = listBtns.Count;
 
         for (int iNum = 0; iNum < count; iNum++)
@@ -95,6 +113,21 @@ public class CameraManager : MonoBehaviour
         {
             //SwitchCamera(Cams.SubCam03);
             SwitchCamera(3);
+        }
+
+        if (forTest)
+        {
+            forTest = false;
+
+            if (_action == null)
+            {
+                Debug.Log("저는 아무런 액션도 가지고 있지 않습니다.");
+            }
+
+            else
+            {
+                _action.Invoke();
+            }
         }
     }
 
